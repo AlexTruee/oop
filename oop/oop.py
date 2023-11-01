@@ -32,6 +32,9 @@ class Student:
                f'Курсы в процессе изучения: {", ".join(self.courses_in_progress)}\n' \
                f'Завершенные курсы: {", ".join(self.finished_courses)}'
 
+    def __gt__(self, other):
+        return self.calc_average() > other.calc_average()
+
 
 class Mentor:
 
@@ -60,6 +63,9 @@ class Lecturer(Mentor):
                f'Фамилия:{self.surname}' \
                f'\nСредняя оценка за лекции: {self.calc_average()}'
 
+    def __gt__(self, other):
+        return self.calc_average() > other.calc_average()
+
 
 class Reviewer(Mentor):
 
@@ -70,7 +76,7 @@ class Reviewer(Mentor):
             else:
                 student.grades[course] = [grade]
         else:
-            return 'Ошибка! Проверьте введенные данные'
+            return 'Ошибка! Проверьте введённые данные'
 
     def __str__(self):
         return f'Имя:{self.name}\n' \
@@ -79,13 +85,12 @@ class Reviewer(Mentor):
 
 some_student = Student('Мария', 'Алексеева ', 'женщина')
 second_student = Student('Павел', 'Баранов', 'мужчина')
-third_student = Student('Екатерина', 'Васильева', 'женщина')
 
 some_lecturer = Lecturer('Доктор', 'Лектор')
 second_lecturer = Lecturer('Энтони', 'Хопкинс')
-third_lecturer = Lecturer('Томас', 'Харрис')
 
-reviewer = Reviewer('Some', 'Buddy')
+reviewer = Reviewer('Лада', 'Дэнс')
+second_reviewer = Reviewer('Сильвестр', 'Сталонне')
 
 some_student.courses_in_progress += ['Python']
 some_student.courses_in_progress += ['Git']
@@ -95,18 +100,11 @@ second_student.courses_in_progress += ['Python']
 second_student.courses_in_progress += ['Git']
 second_student.finished_courses += ['Введение в программирование']
 
-third_student.courses_in_progress += ['Python']
-third_student.courses_in_progress += ['Git']
-third_student.finished_courses += ['Введение в программирование']
-
 some_lecturer.courses_attached += ['Python']
 some_lecturer.courses_attached += ['Git']
 
 second_lecturer.courses_attached += ['Python']
 second_lecturer.courses_attached += ['Git']
-
-third_lecturer.courses_attached += ['Python']
-third_lecturer.courses_attached += ['Git']
 
 reviewer.courses_attached += ['Python']
 reviewer.courses_attached += ['Git']
@@ -121,12 +119,6 @@ reviewer.rate_hw(second_student, 'Python', 10)
 reviewer.rate_hw(second_student, 'Git', 10)
 reviewer.rate_hw(second_student, 'Git', 10)
 
-reviewer.rate_hw(third_student, 'Python', 8)
-reviewer.rate_hw(third_student, 'Python', 8)
-reviewer.rate_hw(third_student, 'Git', 8)
-reviewer.rate_hw(third_student, 'Git', 9)
-
-
 some_student.rate_lecture(some_lecturer, 'Python', 10)
 some_student.rate_lecture(some_lecturer, 'Python', 10)
 some_student.rate_lecture(some_lecturer, 'Git', 3)
@@ -137,11 +129,8 @@ some_student.rate_lecture(second_lecturer, 'Python', 10)
 some_student.rate_lecture(second_lecturer, 'Git', 10)
 some_student.rate_lecture(second_lecturer, 'Git', 10)
 
-some_student.rate_lecture(third_lecturer, 'Python', 7)
-some_student.rate_lecture(third_lecturer, 'Python', 8)
-some_student.rate_lecture(third_lecturer, 'Git', 3)
-some_student.rate_lecture(third_lecturer, 'Git', 6)
-
 print(some_student)
-print(some_lecturer.grades)
+print(second_student)
 print(some_lecturer)
+print(second_lecturer)
+print(some_lecturer > second_lecturer)
